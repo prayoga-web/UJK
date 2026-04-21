@@ -85,7 +85,7 @@
 
         {{-- Footer Copyright --}}
         <p class="text-center text-slate-400 text-xs mt-8">
-            &copy; 2026 EduSys Management System. All rights reserved.
+            &copy; 2026 EduSys Management System by latief. All rights reserved.
         </p>
     </div>
 

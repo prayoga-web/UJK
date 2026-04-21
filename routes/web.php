@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /**
@@ -18,7 +19,6 @@ Route::post('/login', [AuthController::class, 'login']);
 
 // Proses logout - menghapus session dan redirect ke login
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
 /**
  * ========================================
  * RUTE TERLINDUNGI (Memerlukan Autentikasi)
@@ -41,6 +41,13 @@ Route::middleware(['auth'])->group(function () {
      * Menampilkan halaman utama dengan statistik inventaris barang
      */
     Route::get('/dashboard', [ItemController::class, 'dashboard'])->name('dashboard');
+
+    /**
+     * Rute Profile
+     * Menampilkan dan mengupdate profil user
+     */
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
     /**
      * Rute Resource CRUD untuk Barang
