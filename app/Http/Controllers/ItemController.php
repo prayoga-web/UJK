@@ -1,0 +1,133 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Item;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+/**
+ * ItemController - Menangani CRUD operasi untuk barang inventaris
+ * 
+ * Controller ini bertanggung jawab untuk:
+ * - Menampilkan daftar barang (index)
+ * - Menampilkan form tambah barang (create)
+ * - Menyimpan barang baru (store)
+ * - Menampilkan form edit barang (edit)
+ * - Mengupdate data barang (update)
+ * - Menghapus barang (destroy)
+ * - Menampilkan dashboard dengan statistik barang (dashboard)
+ */
+class ItemController extends Controller
+{
+    /**
+     * Tampilkan daftar semua barang
+     * 
+     * @return \Illuminate\View\View
+     */
+    public function index()
+    {
+        // Ambil semua data barang dari database
+        $items = Item::all();
+        // Tampilkan view dengan data barang
+        return view('items.index', compact('items'));
+    }
+
+    /**
+     * Tampilkan form untuk menambah barang baru
+     * 
+     * @return \Illuminate\View\View
+     */
+    public function create()
+    {
+        return view('items.create');
+    }
+
+    /**
+     * Simpan barang baru ke database
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request)
+    {
+        // Validasi input form
+        $request->validate([
+            'nama_barang' => 'required',
+            'stok' => 'required|numeric',
+            'harga' => 'required|numeric',
+        ]);
+
+        // Buat record barang baru di database
+        Item::create($request->all());
+        // Redirect ke halaman daftar barang dengan pesan sukses
+        return redirect()->route('items.index')->with('success', 'Barang berhasil ditambah!');
+    }
+
+    /**
+     * Tampilkan form untuk mengedit barang
+     * 
+     * @param  \App\Models\Item  $item
+     * @return \Illuminate\View\View
+     */
+    public function edit(Item $item)
+    {
+        return view('items.edit', compact('item'));
+    }
+
+    /**
+     * Update data barang di database
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Item  $item
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, Item $item)
+    {
+        // Validasi input form
+        $request->validate([
+            'nama_barang' => 'required',
+            'stok' => 'required|numeric',
+            'harga' => 'required|numeric',
+        ]);
+
+        // Update record barang dengan data baru
+        $item->update($request->all());
+        // Redirect ke halaman daftar barang dengan pesan sukses
+        return redirect()->route('items.index')->with('success', 'Barang berhasil diupdate!');
+    }
+
+    /**
+     * Hapus barang dari database
+     * 
+     * @param  \App\Models\Item  $item
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Item $item)
+    {
+        // Hapus record barang dari database
+        $item->delete();
+        // Redirect ke halaman daftar barang dengan pesan sukses
+        return redirect()->route('items.index')->with('success', 'Barang berhasil dihapus!');
+    }
+
+    /**
+     * Tampilkan dashboard dengan statistik barang
+     * 
+     * @return \Illuminate\View\View
+     */
+    public function dashboard()
+    {
+        // Hitung total jumlah barang
+        $totalBarang = Item::count();
+        // Hitung total stok semua barang
+        $totalStok = Item::sum('stok');
+        // Hitung jumlah kategori unik
+        $totalKategori = Item::distinct('kategori')->count('kategori');
+        // Ambil 5 barang terbaru untuk ditampilkan di tabel kecil
+        $recentItems = Item::latest()->take(5)->get();
+
+        // Return view dashboard dengan semua data statistik
+        return view('dashboard', compact('totalBarang', 'totalStok', 'totalKategori', 'recentItems'));
+    }
+}
