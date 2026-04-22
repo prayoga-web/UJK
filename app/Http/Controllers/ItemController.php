@@ -25,11 +25,25 @@ class ItemController extends Controller
      * 
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Ambil semua data barang dari database
-        $items = Item::all();
-        // Tampilkan view dengan data barang
+        // Query dasar untuk items
+        $query = Item::query();
+
+        // Jika ada parameter pencarian nama_barang
+        if ($request->has('nama_barang') && !empty($request->nama_barang)) {
+            $query->where('nama_barang', 'like', '%' . $request->nama_barang . '%');
+        }
+
+        // Jika ada parameter pencarian kategori
+        if ($request->has('kategori') && !empty($request->kategori)) {
+            $query->where('kategori', 'like', '%' . $request->kategori . '%');
+        }
+
+        // Ambil data barang dengan filter
+        $items = $query->get();
+
+        // Return view dengan data barang dan parameter pencarian untuk form
         return view('items.index', compact('items'));
     }
 

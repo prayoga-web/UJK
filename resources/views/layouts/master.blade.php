@@ -12,7 +12,7 @@
         <aside class="w-64 bg-white border-r border-slate-200 hidden md:flex flex-col h-screen sticky top-0">
             <div class="p-6 shrink-0">
                 <h1 class="text-2xl font-bold text-indigo-900 flex items-center gap-2">
-                    <i class="fas fa-boxes text-indigo-600"></i> Inventaris latief
+                    <i class="fas fa-boxes text-indigo-600"></i> L-Store Manager
                 </h1>
             </div>
 
@@ -53,7 +53,7 @@
 
         <main class="flex-1">
             <header class="bg-white border-b border-slate-200 p-4 flex justify-between items-center px-8">
-                <h2 class="text-xl font-semibold text-slate-800">Manajemen Inventaris</h2>
+                <h2 class="text-xl font-semibold text-slate-800">Katalog Produk & Stok</h2>
                 <div class="flex items-center gap-4">
                     <i class="fas fa-bell text-slate-400"></i>
                     <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-white text-xs">A</div>

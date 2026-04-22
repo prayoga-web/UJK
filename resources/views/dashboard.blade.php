@@ -4,7 +4,7 @@
 {{-- Header Dashboard dengan Welcome Message --}}
 <div class="bg-gradient-to-r from-indigo-600 to-violet-600 rounded-2xl p-8 mb-8 text-white shadow-lg shadow-indigo-200">
     <h2 class="text-3xl font-bold mb-2">Selamat Datang, {{ Auth::user()->name }}! 👋</h2>
-    <p class="opacity-80">Berikut adalah ringkasan inventaris sistem EduSys hari ini.</p>
+    <p class="opacity-80">Pusat Kendali L-Store: Ikhtisar Real-time Aset & Pergerakan Stok per tanggal {{ now()->format('d F Y') }}.</p>
 </div>
 
 {{-- Grid Statistik 3 Kolom --}}

@@ -26,6 +26,32 @@
         @endif
     </div>
 
+    {{-- Form Pencarian --}}
+    <div class="p-6 border-b border-slate-100 bg-slate-50">
+        <form method="GET" action="{{ route('items.index') }}" class="flex flex-wrap gap-4 items-end">
+            <div class="flex-1 min-w-[200px]">
+                <label for="nama_barang" class="block text-sm font-medium text-slate-700 mb-2">Cari Nama Barang</label>
+                <input type="text" name="nama_barang" id="nama_barang" value="{{ request('nama_barang') }}" 
+                       placeholder="Masukkan nama barang..." 
+                       class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div class="flex-1 min-w-[200px]">
+                <label for="kategori" class="block text-sm font-medium text-slate-700 mb-2">Cari Kategori</label>
+                <input type="text" name="kategori" id="kategori" value="{{ request('kategori') }}" 
+                       placeholder="Masukkan kategori..." 
+                       class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div class="flex gap-2">
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition flex items-center gap-2 text-sm shadow-md shadow-indigo-100">
+                    <i class="fas fa-search"></i> Cari
+                </button>
+                <a href="{{ route('items.index') }}" class="bg-slate-500 hover:bg-slate-600 text-white px-4 py-2 rounded-lg transition flex items-center gap-2 text-sm shadow-md">
+                    <i class="fas fa-times"></i> Reset
+                </a>
+            </div>
+        </form>
+    </div>
+
     {{-- Tabel Data Barang --}}
     <table class="w-full text-left">
         {{-- Header Tabel --}}
