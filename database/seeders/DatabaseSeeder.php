@@ -15,14 +15,14 @@ class DatabaseSeeder extends Seeder
         // Buat user admin default
         \App\Models\User::factory()->create([
             'name' => 'Administrator',
-            'email' => 'admin@test.com',
+            'email' => 'admin@123.com',
             'role' => 'admin',
         ]);
 
         // Buat user biasa untuk testing
         \App\Models\User::factory()->create([
             'name' => 'User Biasa',
-            'email' => 'user@test.com',
+            'email' => 'user@123.com',
             'role' => 'user',
         ]);
 
