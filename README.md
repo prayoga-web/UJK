@@ -23,10 +23,13 @@ Proyek ini mengambil studi kasus **Manajemen Inventaris Konter**. Fokus utama si
 
 ### Fitur Utama:
 
-- **Manajemen Barang (CRUD):** Tambah, Lihat, Edit, dan Hapus data stok produk.
-- **Dashboard Bisnis:** Menampilkan statistik total produk, nilai aset, dan peringatan stok kritis.
-- **User Authentication:** Sistem login aman untuk membatasi akses ke data sensitif.
-- **Modern UI:** Antarmuka responsif menggunakan Tailwind CSS dengan interaksi SweetAlert2.
+## 🚀 Fitur Utama
+
+- **Autentikasi & Otorisasi:** Sistem Login aman dengan middleware Laravel.
+- **Manajemen Produk (CRUD):** Operasi lengkap Tambah, Lihat, Edit, dan Hapus data inventaris.
+- **Dashboard Statistik:** Menampilkan ringkasan total jenis barang, total stok unit, dan kategori yang tersedia.
+- **Pencarian Dinamis:** Memudahkan pencarian barang berdasarkan nama atau kategori secara real-time.
+- **Antarmuka Modern:** Desain sederhana dan responsif menggunakan Tailwind CSS.
 
 ---
 
