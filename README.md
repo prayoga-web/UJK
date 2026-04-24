@@ -62,25 +62,28 @@ Aplikasi web berbasis **Laravel 11** yang dirancang untuk digitalisasi manajemen
 
 ## Struktur Proyek
 
+```
 L_Store_Manager/
 ├── app/
-│ ├── Http/
-│ │ └── Controllers/
-│ │ ├── AuthController.php # Logika Login & Logout
-│ │ └── ItemController.php # Logika CRUD Inventaris
-│ └── Models/
-│ ├── User.php # Model Pengguna & Auth
-│ └── Item.php # Model Stok Barang
+│   ├── Http/
+│   │   └── Controllers/
+│   │       ├── AuthController.php          # Logika Login & Logout
+│   │       └── ItemController.php          # Logika CRUD Inventaris
+│   └── Models/
+│       ├── User.php                        # Model Pengguna & Auth
+│       └── Item.php                        # Model Stok Barang
 ├── database/
-│ ├── migrations/ # Cetak biru tabel database
-│ └── seeders/ # Data contoh (User Admin)
-├── resources/views/
-│ ├── auth/ # View Halaman Login
-│ ├── layouts/ # Template Utama (Navbar/Footer)
-│ └── items/ # View CRUD (Index, Create, Edit)
+│   ├── migrations/                         # Cetak biru tabel database
+│   └── seeders/                            # Data contoh (User Admin)
+├── resources/
+│   └── views/
+│       ├── auth/                           # View Halaman Login
+│       ├── layouts/                        # Template Utama (Navbar/Footer)
+│       └── items/                          # View CRUD (Index, Create, Edit)
 ├── routes/
-│ └── web.php # Definisi URL & Middleware
-└── .env # Konfigurasi Environment
+│   └── web.php                             # Definisi URL & Middleware
+└── .env                                    # Konfigurasi Environment
+```
 
 ---
 
