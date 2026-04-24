@@ -1,7 +1,3 @@
-<p align="center">
-    <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="300" alt="Laravel Logo">
-</p>
-
 # 📱 L-Store Manager — Sistem Manajemen Inventaris Konter HP
 
 Aplikasi web berbasis **Laravel 11** yang dirancang untuk digitalisasi manajemen stok dan aset pada toko retail smartphone (Konter HP). Aplikasi ini mengintegrasikan sistem autentikasi keamanan, manajemen data (CRUD), dan antarmuka responsif.
