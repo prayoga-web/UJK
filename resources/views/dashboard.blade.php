@@ -7,8 +7,8 @@
     <p class="opacity-80">Pusat Kendali L-Store: Ikhtisar Real-time Aset & Pergerakan Stok per tanggal {{ now()->format('d F Y') }}.</p>
 </div>
 
-{{-- Grid Statistik 3 Kolom --}}
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+{{-- Grid Statistik 4 Kolom --}}
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
     {{-- Card 1: Total Barang --}}
     <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-5">
         <div class="w-14 h-14 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 text-2xl">
@@ -39,6 +39,21 @@
         <div>
             <p class="text-slate-500 text-sm">Total Stok</p>
             <h3 class="text-2xl font-bold text-slate-800">{{ $totalStok }}</h3>
+        </div>
+    </div>
+
+    {{-- Card 4: Stok Kritis --}}
+    <div class="bg-white p-6 rounded-3xl shadow-sm border border-amber-100">
+        <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div>
+                <p class="text-sm text-slate-500 font-medium">Perlu Restok</p>
+                <h3 class="text-2xl font-bold text-slate-800">
+                    {{ $stokKritis }} <span class="text-xs font-normal">Item</span>
+                </h3>
+            </div>
         </div>
     </div>
 </div>

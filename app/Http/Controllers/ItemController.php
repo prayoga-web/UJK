@@ -132,16 +132,22 @@ class ItemController extends Controller
      */
     public function dashboard()
     {
-        // Hitung total jumlah barang
+        // Hitung total jenis barang
         $totalBarang = Item::count();
-        // Hitung total stok semua barang
+        
+        // Hitung total stok seluruh unit
         $totalStok = Item::sum('stok');
+
+        // FITUR BARU: Hitung barang yang stoknya di bawah 5 (Stok Kritis)
+        $stokKritis = Item::where('stok', '<', 5)->count();
+        
         // Hitung jumlah kategori unik
         $totalKategori = Item::distinct('kategori')->count('kategori');
-        // Ambil 5 barang terbaru untuk ditampilkan di tabel kecil
+        
+        // Ambil 5 barang terbaru
         $recentItems = Item::latest()->take(5)->get();
 
-        // Return view dashboard dengan semua data statistik
-        return view('dashboard', compact('totalBarang', 'totalStok', 'totalKategori', 'recentItems'));
+        // Masukkan 'stokKritis' ke dalam compact
+        return view('dashboard', compact('totalBarang', 'totalStok', 'totalKategori', 'recentItems', 'stokKritis'));
     }
 }
