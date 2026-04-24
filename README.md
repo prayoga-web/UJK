@@ -145,6 +145,17 @@ L_Store_Manager/
 
 ---
 
+## Akun Default (Seeder)
+
+Setelah menjalankan perintah `php artisan migrate --seed`, Anda dapat menggunakan akun berikut untuk masuk ke sistem:
+
+| Role  | Email         | Password  |
+| ----- | ------------- | --------- |
+| Admin | admin@123.com | admin123  |
+| User  | user@123.com  | user12345 |
+
+---
+
 ## Keamanan & Alur Data
 
 Sistem ini menerapkan dua lapisan keamanan utama:
