@@ -23,33 +23,48 @@
         {{-- Input Nama Barang --}}
         <div>
             <label class="block text-slate-700 text-sm font-semibold mb-2">Nama Barang</label>
-            <input type="text" name="nama_barang" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all" placeholder="Masukkan nama barang" required>
+            <input type="text" name="nama_barang" value="{{ old('nama_barang') }}" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all" placeholder="Masukkan nama barang" required>
         </div>
 
-        {{-- Input Kategori dan Stok (Side by Side) --}}
-        <div class="grid grid-cols-2 gap-4">
-            {{-- Input Kategori --}}
+        {{-- Input Kategori, Supplier, dan Stok --}}
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {{-- Pilih Kategori --}}
             <div>
                 <label class="block text-slate-700 text-sm font-semibold mb-2">Kategori</label>
-                <input type="text" name="kategori" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all" placeholder="Contoh: Elektronik" required>
+                <select name="category_id" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all">
+                    <option value="">Pilih kategori</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>{{ $category->nama_kategori }}</option>
+                    @endforeach
+                </select>
             </div>
-            {{-- Input Stok --}}
+
+            {{-- Pilih Supplier --}}
             <div>
-                <label class="block text-slate-700 text-sm font-semibold mb-2">Stok</label>
-                <input type="number" name="stok" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all" placeholder="0" required>
+                <label class="block text-slate-700 text-sm font-semibold mb-2">Supplier</label>
+                <select name="supplier_id" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all">
+                    <option value="">Pilih supplier (opsional)</option>
+                    @foreach($suppliers as $supplier)
+                        <option value="{{ $supplier->id }}" {{ old('supplier_id') == $supplier->id ? 'selected' : '' }}>{{ $supplier->nama_supplier }}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
 
-        {{-- Input Harga dengan Prefix Rp --}}
-        <div>
-            <label class="block text-slate-700 text-sm font-semibold mb-2">Harga (Rupiah)</label>
-            <div class="relative">
-                {{-- Prefix "Rp" di sebelah kiri input --}}
-                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium">Rp</span>
-                <input type="number" name="harga" value="{{ $item->harga ?? '' }}" placeholder="Contoh: 150000" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-12 pr-4 py-3 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all" required>
+        {{-- Input Stok dan Harga --}}
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+                <label class="block text-slate-700 text-sm font-semibold mb-2">Stok</label>
+                <input type="number" name="stok" value="{{ old('stok') }}" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all" placeholder="0" required>
             </div>
-            {{-- Catatan Instruksi Input --}}
-            <p class="text-[10px] text-slate-400 mt-1">*Masukkan angka saja (tanpa titik/koma)</p>
+            <div>
+                <label class="block text-slate-700 text-sm font-semibold mb-2">Harga (Rupiah)</label>
+                <div class="relative">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-medium">Rp</span>
+                    <input type="number" name="harga" value="{{ old('harga') }}" placeholder="Contoh: 150000" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-12 pr-4 py-3 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all" required>
+                </div>
+                <p class="text-[10px] text-slate-400 mt-1">*Masukkan angka saja (tanpa titik/koma)</p>
+            </div>
         </div>
 
         {{-- Tombol Submit --}}

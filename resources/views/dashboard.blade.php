@@ -7,8 +7,8 @@
     <p class="opacity-80">Pusat Kendali L-Store: Ikhtisar Real-time Aset & Pergerakan Stok per tanggal {{ now()->format('d F Y') }}.</p>
 </div>
 
-{{-- Grid Statistik 4 Kolom --}}
-<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+{{-- Grid Statistik 6 Kolom --}}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
     {{-- Card 1: Total Barang --}}
     <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-5">
         <div class="w-14 h-14 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 text-2xl">
@@ -31,7 +31,18 @@
         </div>
     </div>
 
-    {{-- Card 3: Total Stok --}}
+    {{-- Card 3: Total Supplier --}}
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-5">
+        <div class="w-14 h-14 bg-cyan-50 rounded-xl flex items-center justify-center text-cyan-600 text-2xl">
+            <i class="fas fa-truck"></i>
+        </div>
+        <div>
+            <p class="text-slate-500 text-sm">Total Supplier</p>
+            <h3 class="text-2xl font-bold text-slate-800">{{ $totalSupplier }}</h3>
+        </div>
+    </div>
+
+    {{-- Card 4: Total Stok --}}
     <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-5">
         <div class="w-14 h-14 bg-amber-50 rounded-xl flex items-center justify-center text-amber-600 text-2xl">
             <i class="fas fa-warehouse"></i>
@@ -42,7 +53,18 @@
         </div>
     </div>
 
-    {{-- Card 4: Stok Kritis --}}
+    {{-- Card 5: Total Aset --}}
+    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-5">
+        <div class="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center text-green-600 text-2xl">
+            <i class="fas fa-dollar-sign"></i>
+        </div>
+        <div>
+            <p class="text-slate-500 text-sm">Total Aset</p>
+            <h3 class="text-2xl font-bold text-slate-800">Rp {{ number_format($totalAset, 0, ',', '.') }}</h3>
+        </div>
+    </div>
+
+    {{-- Card 6: Stok Kritis --}}
     <div class="bg-white p-6 rounded-3xl shadow-sm border border-amber-100">
         <div class="flex items-center gap-4">
             <div class="w-12 h-12 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600">
@@ -73,6 +95,7 @@
                 <tr>
                     <th class="px-6 py-4">Nama Barang</th>
                     <th class="px-6 py-4">Kategori</th>
+                    <th class="px-6 py-4">Supplier</th>
                     <th class="px-6 py-4">Harga</th>
                 </tr>
             </thead>
@@ -85,9 +108,11 @@
                     {{-- Kategori dengan Badge --}}
                     <td class="px-6 py-4">
                         <span class="bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full text-xs font-semibold">
-                            {{ $item->kategori }}
+                            {{ $item->category->nama_kategori ?? '-' }}
                         </span>
                     </td>
+                    {{-- Supplier --}}
+                    <td class="px-6 py-4 text-slate-500">{{ $item->supplier->nama_supplier ?? '-' }}</td>
                     {{-- Harga dengan Format Rupiah --}}
                     <td class="px-6 py-4 text-slate-600">Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
                 </tr>

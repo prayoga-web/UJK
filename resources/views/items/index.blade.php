@@ -59,6 +59,7 @@
             <tr>
                 <th class="px-6 py-4">Nama Barang</th>
                 <th class="px-6 py-4">Kategori</th>
+                <th class="px-6 py-4">Supplier</th>
                 <th class="px-6 py-4">Stok</th>
                 <th class="px-6 py-4">Harga</th>
                 @if(auth()->user()->role == 'admin')
@@ -73,7 +74,9 @@
                 {{-- Nama Barang --}}
                 <td class="px-6 py-4 text-slate-700">{{ $item->nama_barang }}</td>
                 {{-- Kategori --}}
-                <td class="px-6 py-4 text-slate-500">{{ $item->kategori }}</td>
+                <td class="px-6 py-4 text-slate-500">{{ $item->category->nama_kategori ?? '-' }}</td>
+                {{-- Supplier --}}
+                <td class="px-6 py-4 text-slate-500">{{ $item->supplier->nama_supplier ?? '-' }}</td>
                 {{-- Stok dengan Format Unit --}}
                 <td class="px-6 py-4 text-slate-700 font-medium">{{ $item->stok }} Unit</td>
                 {{-- Harga dengan Format Rupiah --}}

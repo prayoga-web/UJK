@@ -61,4 +61,6 @@ Route::middleware(['auth'])->group(function () {
      * - DELETE /items/{id}         -> destroy (hapus data)
      */
     Route::resource('items', ItemController::class);
+    Route::resource('categories', App\Http\Controllers\CategoryController::class)->except(['show']);
+    Route::resource('suppliers', App\Http\Controllers\SupplierController::class)->except(['show']);
 });

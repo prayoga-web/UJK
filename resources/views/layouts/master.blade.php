@@ -23,6 +23,12 @@
                 <a href="{{ route('items.index') }}" class="flex items-center gap-3 p-3 {{ Request::is('items*') ? 'bg-indigo-50 text-indigo-600 font-medium' : 'text-slate-500 hover:bg-slate-50' }} rounded-lg transition">
                     <i class="fas fa-archive w-5"></i> Manajemen Barang 
                 </a>
+                <a href="{{ route('categories.index') }}" class="flex items-center gap-3 p-3 {{ Request::is('categories*') ? 'bg-indigo-50 text-indigo-600 font-medium' : 'text-slate-500 hover:bg-slate-50' }} rounded-lg transition">
+                    <i class="fas fa-tags w-5"></i> Kategori Barang
+                </a>
+                <a href="{{ route('suppliers.index') }}" class="flex items-center gap-3 p-3 {{ Request::is('suppliers*') ? 'bg-indigo-50 text-indigo-600 font-medium' : 'text-slate-500 hover:bg-slate-50' }} rounded-lg transition">
+                    <i class="fas fa-truck w-5"></i> Supplier
+                </a>
             </nav>
 
             <div class="p-4 border-t border-slate-200 bg-white shrink-0">

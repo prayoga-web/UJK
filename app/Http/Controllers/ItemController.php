@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Item;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 /**
  * ItemController - Menangani CRUD operasi untuk barang inventaris
- * 
+ *
  * Controller ini bertanggung jawab untuk:
  * - Menampilkan daftar barang (index)
  * - Menampilkan form tambah barang (create)
@@ -27,34 +29,34 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-        // Query dasar untuk items
-        $query = Item::query();
+        $query = Item::with(['category', 'supplier']);
 
-        // Jika ada parameter pencarian nama_barang
         if ($request->has('nama_barang') && !empty($request->nama_barang)) {
             $query->where('nama_barang', 'like', '%' . $request->nama_barang . '%');
         }
 
-        // Jika ada parameter pencarian kategori
         if ($request->has('kategori') && !empty($request->kategori)) {
-            $query->where('kategori', 'like', '%' . $request->kategori . '%');
+            $query->whereHas('category', function ($subQuery) use ($request) {
+                $subQuery->where('nama_kategori', 'like', '%' . $request->kategori . '%');
+            });
         }
 
-        // Ambil data barang dengan filter
         $items = $query->get();
 
-        // Return view dengan data barang dan parameter pencarian untuk form
         return view('items.index', compact('items'));
     }
 
     /**
      * Tampilkan form untuk menambah barang baru
-     * 
+     *
      * @return \Illuminate\View\View
      */
     public function create()
     {
-        return view('items.create');
+        $categories = Category::orderBy('nama_kategori')->get();
+        $suppliers = Supplier::orderBy('nama_supplier')->get();
+
+        return view('items.create', compact('categories', 'suppliers'));
     }
 
     /**
@@ -65,28 +67,31 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi input form
         $request->validate([
             'nama_barang' => 'required',
+            'category_id' => 'required|exists:categories,id',
+            'supplier_id' => 'nullable|exists:suppliers,id',
             'stok' => 'required|numeric',
             'harga' => 'required|numeric',
         ]);
 
-        // Buat record barang baru di database
-        Item::create($request->all());
-        // Redirect ke halaman daftar barang dengan pesan sukses
+        Item::create($request->only(['nama_barang', 'category_id', 'supplier_id', 'stok', 'harga']));
+
         return redirect()->route('items.index')->with('success', 'Barang berhasil ditambah!');
     }
 
     /**
      * Tampilkan form untuk mengedit barang
-     * 
+     *
      * @param  \App\Models\Item  $item
      * @return \Illuminate\View\View
      */
     public function edit(Item $item)
     {
-        return view('items.edit', compact('item'));
+        $categories = Category::orderBy('nama_kategori')->get();
+        $suppliers = Supplier::orderBy('nama_supplier')->get();
+
+        return view('items.edit', compact('item', 'categories', 'suppliers'));
     }
 
     /**
@@ -98,22 +103,22 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        // Validasi input form
         $request->validate([
             'nama_barang' => 'required',
+            'category_id' => 'required|exists:categories,id',
+            'supplier_id' => 'nullable|exists:suppliers,id',
             'stok' => 'required|numeric',
             'harga' => 'required|numeric',
         ]);
 
-        // Update record barang dengan data baru
-        $item->update($request->all());
-        // Redirect ke halaman daftar barang dengan pesan sukses
+        $item->update($request->only(['nama_barang', 'category_id', 'supplier_id', 'stok', 'harga']));
+
         return redirect()->route('items.index')->with('success', 'Barang berhasil diupdate!');
     }
 
     /**
      * Hapus barang dari database
-     * 
+     *
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -132,22 +137,14 @@ class ItemController extends Controller
      */
     public function dashboard()
     {
-        // Hitung total jenis barang
         $totalBarang = Item::count();
-        
-        // Hitung total stok seluruh unit
         $totalStok = Item::sum('stok');
-
-        // FITUR BARU: Hitung barang yang stoknya di bawah 5 (Stok Kritis)
         $stokKritis = Item::where('stok', '<', 5)->count();
-        
-        // Hitung jumlah kategori unik
-        $totalKategori = Item::distinct('kategori')->count('kategori');
-        
-        // Ambil 5 barang terbaru
-        $recentItems = Item::latest()->take(5)->get();
+        $totalKategori = Category::count();
+        $totalSupplier = Supplier::count();
+        $totalAset = Item::selectRaw('SUM(harga * stok) as total')->value('total') ?? 0;
+        $recentItems = Item::with(['category', 'supplier'])->latest()->take(5)->get();
 
-        // Masukkan 'stokKritis' ke dalam compact
-        return view('dashboard', compact('totalBarang', 'totalStok', 'totalKategori', 'recentItems', 'stokKritis'));
+        return view('dashboard', compact('totalBarang', 'totalStok', 'totalKategori', 'totalSupplier', 'totalAset', 'recentItems', 'stokKritis'));
     }
 }

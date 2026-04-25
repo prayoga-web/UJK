@@ -25,13 +25,29 @@
         {{-- Input Nama Barang --}}
         <div>
             <label class="block text-slate-700 text-sm font-semibold mb-2">Nama Barang</label>
-            <input type="text" name="nama_barang" value="{{ $item->nama_barang }}" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all" placeholder="Masukkan nama barang">
+            <input type="text" name="nama_barang" value="{{ old('nama_barang', $item->nama_barang) }}" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all" placeholder="Masukkan nama barang" required>
         </div>
 
-        {{-- Input Kategori --}}
-        <div>
-            <label class="block text-slate-700 text-sm font-semibold mb-2">Kategori</label>
-            <input type="text" name="kategori" value="{{ $item->kategori }}" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all" placeholder="Contoh: Elektronik">
+        {{-- Pilih Kategori dan Supplier --}}
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div>
+                <label class="block text-slate-700 text-sm font-semibold mb-2">Kategori</label>
+                <select name="category_id" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all">
+                    <option value="">Pilih kategori</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}" {{ old('category_id', $item->category_id) == $category->id ? 'selected' : '' }}>{{ $category->nama_kategori }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div>
+                <label class="block text-slate-700 text-sm font-semibold mb-2">Supplier</label>
+                <select name="supplier_id" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all">
+                    <option value="">Pilih supplier (opsional)</option>
+                    @foreach($suppliers as $supplier)
+                        <option value="{{ $supplier->id }}" {{ old('supplier_id', $item->supplier_id) == $supplier->id ? 'selected' : '' }}>{{ $supplier->nama_supplier }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
 
         {{-- Input Stok dan Harga (Side by Side) --}}
@@ -39,12 +55,12 @@
             {{-- Input Stok --}}
             <div>
                 <label class="block text-slate-700 text-sm font-semibold mb-2">Stok</label>
-                <input type="number" name="stok" value="{{ $item->stok }}" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all" placeholder="0">
+                <input type="number" name="stok" value="{{ old('stok', $item->stok) }}" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all" placeholder="0" required>
             </div>
             {{-- Input Harga --}}
             <div>
                 <label class="block text-slate-700 text-sm font-semibold mb-2">Harga</label>
-                <input type="number" name="harga" value="{{ $item->harga }}" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all" placeholder="0">
+                <input type="number" name="harga" value="{{ old('harga', $item->harga) }}" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all" placeholder="0" required>
             </div>
         </div>
 
